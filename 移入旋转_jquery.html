@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .box{
+            width: 100px;
+            height:100px;
+            /*padding:10px;*/
+            box-sizing:border-box;
+            background-color:red;
+            background-origin:content-box;
+            perspective:200px;
+            perspective-origin:50px 50px;
+            /*margin:10px;*/
+            position:relative;
+            float:left;
+        }
+        .box div{
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            display: none;
+        }
+        .left{
+            animation:in_left .5s ease;
+        }
+        .top{
+            animation:in_top .5s ease;
+        }
+        .right{
+            animation:in_right .5s ease;
+        }
+        .bottom{
+            animation:in_bottom .5s ease;
+        }
+
+        .out_left{
+            animation:out_left .5s ease forwards;
+        }
+        .out_top{
+            animation:out_top .5s ease forwards;
+        }
+        .out_right{
+            animation:out_right .5s ease forwards;
+        }
+        .out_bottom{
+            animation:out_bottom .5s ease forwards;
+        }
+        @keyframes in_left {
+            0% {
+                transform-origin:0px 50px;
+                 transform:rotateY(104deg);}
+            100%{
+                transform-origin:0px 50px;
+                transform:rotateY(0deg);
+            }
+        }
+        @keyframes in_top {
+            0% {
+                transform-origin:50px 0px;
+                 transform:rotateX(-104deg);}
+            100%{
+                transform-origin:50px 0px;
+                transform:rotateX(0deg);
+            }
+        }
+        @keyframes in_right {
+            0% {
+                transform-origin:100px 50px;
+                 transform:rotateY(-104deg);}
+            100%{
+                transform-origin:100px 50px;
+                transform:rotateY(0deg);
+            }
+        }
+        @keyframes in_bottom {
+            0% {
+                transform-origin:50px 100px;
+                 transform:rotateX(104deg);}
+            100%{
+                transform-origin:50px 100px;
+                transform:rotateX(0deg);
+            }
+        }
+
+
+        @keyframes out_left {
+            0%{
+                transform-origin:0px 50px;
+                transform:rotateY(0deg);
+            }
+            100% {
+                transform-origin:0px 50px;
+                 transform:rotateY(104deg);}
+        }
+        @keyframes out_top {
+            0%{
+                transform-origin:50px 0px;
+                transform:rotateX(0deg);
+            }
+            100% {
+                transform-origin:50px 0px;
+                 transform:rotateX(-104deg);}
+        }
+        @keyframes out_right {
+            0%{
+                transform-origin:100px 50px;
+                transform:rotateY(0deg);
+            }
+            100% {
+                transform-origin:100px 50px;
+                 transform:rotateY(-104deg);}
+        }
+        @keyframes out_bottom {
+            0%{
+                transform-origin:50px 100px;
+                transform:rotateX(0deg);
+            }
+            100% {
+                transform-origin:50px 100px;
+                 transform:rotateX(104deg);}
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+    <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+        <div class="box">
+        <div class="mask"></div>
+    </div>
+    
+</body>
+<script src='./jquery-3.1.0.js'></script>
+<script>
+    var box = document.querySelector('#box');
+    
+    $(".mask").on('mouseover',function(e){
+            e.stopPropagation();
+    })
+
+    $('.box').on('mouseenter',function(e){
+        console.log($(this).children())
+         $(this).children().on('mouseleave',function(e){
+            e.stopPropagation();
+        })
+        //显示遮罩
+        $(this).children().css('display','block');
+        //获取鼠标进入盒子的坐标
+        var x = e.pageX;
+        var y = e.pageY;
+
+        x = x - $(this).offset().left;
+        y = y - $(this).offset().top;
+        console.log($(this).offset().left)
+        console.log(x + '------' + y)
+        //判断方向,并添加动画
+        if( x + y >= 100 ){
+            if( x > y ){
+                $(this).children().attr('class','').addClass('right')
+            }
+            if( x <= y ){
+                $(this).children().attr('class','').addClass('bottom')
+            }
+        }else{
+            if( x < y ){
+                $(this).children().attr('class','').addClass('left')
+            }
+            if( x >= y ){
+                $(this).children().attr('class','').addClass('top')
+            }
+        }
+    })
+    $(".box").mouseleave(function(e){
+        $(this).children().on('mouseleave',function(e){
+            e.stopPropagation();
+        })
+        var x = e.pageX;
+        var y = e.pageY;
+
+        x = x - $(this).offset().left;
+        y = y - $(this).offset().top;
+
+        if( x + y >= 100 ){
+            if( x > y ){
+                $(this).children().attr('class','').addClass('out_right');
+            }
+            if( x <= y ){
+                $(this).children().attr('class','').addClass('out_bottom');
+            }
+        }else{
+            if( x < y ){
+                $(this).children().attr('class','').addClass('out_left');
+            }
+            if( x >= y ){
+                $(this).children().attr('class','').addClass('out_top');
+            }
+        }
+    })
+    // box.onmouseout=function(){
+    //     this.innerHTML='';
+    // }
+
+</script>
+</html>
